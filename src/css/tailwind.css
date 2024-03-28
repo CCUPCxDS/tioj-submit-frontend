@@ -6,3 +6,16 @@ html, body, #app
 {
   @apply h-full m-0 p-0;
 }
+#content
+{
+  min-height: 100vh;
+  background-color: rgb(251, 232, 253);
+}
+.data-input
+{
+  @apply text-2xl bg-transparent border-b-2 border-slate-500 m-2;
+}
+.data-input:focus
+{
+  @apply bg-purple-200 border-0 border-transparent;
+}
