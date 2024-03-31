@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { FileZipOutlined } from '@ant-design/icons-vue';
 // 是否上傳成功
 const isUploaded = ref(false);
+const emit = defineEmits(['updatefile']);
 
 // 定義一個反應式參考來存儲上傳的檔案
 const uploadedFile = ref<File | null>(null);
@@ -15,14 +16,14 @@ const handleFileSelect = async(event: Event) => {
     return;
   }
   uploadedFile.value = input.files[0];
-  console.log(input.files[0])
-  if(input.files[0].size > 1024 * 1024 * 1){
-    alert('檔案大小不能超過1MB');
+  if(input.files[0].size > 1024 * 1024 * 100){
+    alert('檔案大小不能超過100MB');
     return;
   }
   uploadedFileName.value = input.files[0].name;
   
   isUploaded.value = true;
+  emit('updatefile', uploadedFile.value);
   // 這裡你可以進行更多的操作，比如讀取檔案內容或者上傳到伺服器等
 };
 </script>
