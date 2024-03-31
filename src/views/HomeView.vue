@@ -1,23 +1,32 @@
-<script setup>
-import upload from "../components/upload.vue";
+<script lang='ts' setup>
+import upload from "../components/zipUpload.vue";
 import { ref } from 'vue';
-import { login } from "../functions/login";
+import { postInform } from "../functions/postinform";
 
 const ProblemID = ref("");
 const username = ref("");
 const password = ref("");
+let zipfile : File | null = null;
+
+const acceptFile = (file) => {
+  zipfile = file;
+};
 
 const clickHandler = async () => {
-  console.log("click");
-  const res = await login(username.value, password.value);
-  console.log(res);
+  
+  if (ProblemID.value === "" || username.value === "" || password.value === "" || zipfile === null) {
+    alert("請輸入完整資料");
+    return;
+  }
+  console.log(ProblemID.value, username.value, password.value, zipfile);
+  await postInform(ProblemID.value, username.value, password.value, zipfile);
 };
 </script>
 
 <template>
   <div class = "flex justify-center items-center" id = "content">
     <div class = "flex justify-center flex-col">
-      <upload class = "w-[30rem]"/>
+      <upload class = "w-[30rem]" @updatefile="acceptFile"/>
       <input type = "text" placeholder="Problem ID" class="data-input" v-model="ProblemID">
       <input type = "text" placeholder="Judge 帳號" class="data-input" v-model="username">
       <input type = "password" placeholder="Judge 密碼" class="data-input" v-model="password">
@@ -26,4 +35,4 @@ const clickHandler = async () => {
       </button>
     </div>
   </div>
-</template>
+</template>../functions/postinform../components/zipUpload.vue
